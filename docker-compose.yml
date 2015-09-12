@@ -1,0 +1,26 @@
+blanco:
+  build: ./docker/blanco
+  volumes:
+    - ./source:/var/www
+
+nginx:
+  build: ./docker/nginx
+  volumes:
+    - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/nginx.conf
+  volumes_from:
+    - blanco
+  ports:
+    - "8080:80"
+  links:
+    - fpm
+
+fpm:
+  build: ./docker/php-fpm
+  working_dir: /
+  volumes_from:
+    - blanco
+
+redis:
+  build: ./docker/redis
+  ports:
+    - 6379:6379

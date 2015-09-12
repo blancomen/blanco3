@@ -1,0 +1,14 @@
+{
+    "name": "blancomen/blanco3",
+    "description": ".blanco-engine",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Aleksey Kiselev",
+            "email": "yakudgm@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
