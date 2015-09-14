@@ -1,3 +1,4 @@
 .idea
 source/vendor
 source/composer.lock
+source/phpunit.phar

@@ -53,6 +53,13 @@ class RepositoryTest extends PHPUnit_Framework_TestCase {
         }
     }
 
+    public function testNotFound() {
+        $Rep = $this->createRepository();
+        $this->setExpectedException(Orm\Repository\EntityNotFoundException::class);
+
+        $Rep->loadById(100);
+    }
+
     private function createRepository() {
         return new RepositoryMock();
     }
