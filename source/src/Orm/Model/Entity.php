@@ -8,14 +8,21 @@ use Orm\Model\Flags;
 
 abstract class Entity {
     /**
-     * @var int
+     * Entity data id
      */
-    protected $id = 0;
+    const FIELD_ID = 'id';
 
     /**
      * @var array
      */
     protected $data = [];
+
+    /**
+     * @param array $data
+     */
+    public function __construct(array $data = []) {
+        $this->unserialize($data);
+    }
 
     /**
      * Return config data as array.
@@ -50,11 +57,11 @@ abstract class Entity {
      * @return mixed|null
      */
     public function get($field) {
-        if (array_key_exists($field, $this->data)) {
-            return $this->data[$field];
+        if (!array_key_exists($field, $this->data)) {
+            $this->data[$field] = $this->getFieldDefault($field);
         }
 
-        return $this->getFieldDefault($field);
+        return $this->data[$field];
     }
 
     /**
@@ -108,7 +115,7 @@ abstract class Entity {
      * @return array
      */
     protected function getFieldConfig($field, $configField = null) {
-        $config = $this->getDataConfig();
+        $config = $this->getEntityFieldsConfig();
 
         if (array_key_exists($field, $config)) {
             if (!is_null($configField)) {
@@ -135,7 +142,6 @@ abstract class Entity {
 
             $data[$field] = FieldType::serialize($type, $value);
         }
-
         return $data;
     }
 
@@ -152,5 +158,33 @@ abstract class Entity {
         }
 
         $this->data = $data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId() {
+        return $this->get(self::FIELD_ID);
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id) {
+        $this->set(self::FIELD_ID, $id);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEntityFieldsConfig() {
+        $config = $this->getDataConfig();
+
+        $config[self::FIELD_ID] = [
+            'type' => FieldType::INT,
+            'default' => 0,
+        ];
+
+        return $config;
     }
 }

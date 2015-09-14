@@ -12,9 +12,19 @@ class Counters {
     /**
      * @param string $counter
      * @param int $value
+     * @return int
      */
     public function increment($counter, $value = 1) {
-        $this->set($counter, $this->get($counter) + $value);
+        return $this->set($counter, $this->get($counter) + $value);
+    }
+
+    /**
+     * @param string $counter
+     * @param int $value
+     * @return int
+     */
+    public function decrement($counter, $value = 1) {
+        return $this->increment($counter, -$value);
     }
 
     /**
@@ -32,9 +42,10 @@ class Counters {
     /**
      * @param string $counter
      * @param int $value
+     * @return int
      */
     public function set($counter, $value) {
-        $this->counters[$counter] = $value;
+        return $this->counters[$counter] = $value;
     }
 
     /**
