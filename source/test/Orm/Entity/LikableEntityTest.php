@@ -85,6 +85,16 @@ class LikableEntityTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals([3=>1], $Entity->getDislikedUsersIds());
     }
 
+    public function testErrorLikeAgain() {
+        $Entity = $this->createLikableEntity();
+        $User = $this->createUser(1);
+
+        $this->setExpectedException(LogicException::class);
+
+        $Entity->setUserLike($User);
+        $Entity->setUserLike($User);
+    }
+
     private function createLikableEntity() {
         return new \Orm\Entity\LikableEntity();
     }
