@@ -1,8 +1,13 @@
 <?php
 return [
   'test' => [
-      'scheme' => 'tcp',
-      'host'   => 'test-redis',
-      'port'   => 6379,
+      'parameters' => [
+          'scheme' => 'tcp',
+          'host'   => 'test-redis',
+          'port'   => 6379,
+      ],
+      'options' => [
+
+      ],
   ],
 ];

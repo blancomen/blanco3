@@ -48,7 +48,7 @@ class ConnectionFactory {
 
         switch ($clientType) {
             case self::TYPE_REDIS:
-                return new Client($connectionConfig);
+                return new Client($connectionConfig['parameters'], $connectionConfig['options']);
 
             default:
                 throw new Exception("Not found client type: {$clientType}");
