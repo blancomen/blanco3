@@ -14,7 +14,7 @@ class CacheArray implements CacheInterface {
      * @param string $field
      * @return mixed
      */
-    public function get($field) {
+    public function find($field) {
         return array_key_exists($field, $this->cache) ? $this->cache[$field] : null;
     }
 

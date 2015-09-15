@@ -1,6 +1,7 @@
 <?php
 namespace Orm\Repository;
 
+use Cache\CacheArray;
 use Orm\Entity;
 use Predis\Client;
 
@@ -9,6 +10,11 @@ abstract class AbstractEntityRepository {
      * @var Client
      */
     protected $Redis = null;
+
+    /**
+     * @var CacheArray
+     */
+    protected $Cache = null;
 
     /**
      * @param Client $Redis
@@ -41,26 +47,39 @@ abstract class AbstractEntityRepository {
         $jsonData = json_encode($data);
 
         $this->set($Entity->getId(), $jsonData);
+        $this->getCache()->set($Entity->getId(), $Entity);
+
         return $Entity->getId();
     }
 
     /**
      * @param int $id
+     * @param bool $force
      * @return Entity
      * @throws EntityNotFoundException
      */
-    public function loadById($id) {
-        $jsonData = $this->get($id);
+    public function loadById($id, $force = false) {
+        $jsonData = null;
+
+        if (!$force) {
+            $jsonData = $this->getCache()->find($id);
+        }
+
+        if (!$jsonData) {
+            $jsonData = $this->get($id);
+        }
 
         $data = json_decode($jsonData, true);
         $Entity = $this->createEntity($data);
+
+        $this->getCache()->set($Entity->getId(), $Entity);
 
         return $Entity;
     }
 
     /**
      * @param int[] $ids
-     * @return array
+     * @return Entity[]
      */
     public function loadByIds(array $ids) {
         $listJsonData = $this->mget($ids);
@@ -69,6 +88,8 @@ abstract class AbstractEntityRepository {
         foreach ($listJsonData as $jsonData) {
             $data = json_decode($jsonData, true);
             $Entity = $this->createEntity($data);
+
+            $this->getCache()->set($Entity->getId(), $Entity);
 
             $Entities[$Entity->getId()] = $Entity;
         }
@@ -131,5 +152,16 @@ abstract class AbstractEntityRepository {
      */
     protected function setRedis($Redis) {
         $this->Redis = $Redis;
+    }
+
+    /**
+     * @return CacheArray
+     */
+    public function getCache() {
+        if (is_null($this->Cache)) {
+            $this->Cache = new CacheArray();
+        }
+
+        return $this->Cache;
     }
 }

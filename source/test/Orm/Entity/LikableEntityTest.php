@@ -96,7 +96,7 @@ class LikableEntityTest extends PHPUnit_Framework_TestCase {
     }
 
     private function createLikableEntity() {
-        return new \Orm\Entity\LikableEntity();
+        return new LikableEntityMock();
     }
 
     private function createUser($id) {

@@ -5,6 +5,8 @@ use Orm\Entity;
 use Orm\Repository\AbstractEntityRepository;
 
 class UserRepository extends AbstractEntityRepository {
+    const REDIS_NAME = 'users';
+
     /**
      * @return string
      */

@@ -52,7 +52,7 @@ class ConfigLoader {
      * @return Config
      */
     public function load($config) {
-        $Config = $this->getCache()->get($config);
+        $Config = $this->getCache()->find($config);
         if ($Config) {
             return $Config;
         }

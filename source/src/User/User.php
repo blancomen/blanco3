@@ -2,10 +2,13 @@
 namespace User;
 
 use Orm\Entity;
-use Orm\Model\FieldType;
+use Orm\Entity\EntityType;
+use Orm\Entity\FieldParam;
+use Orm\Entity\LikableEntity;
+use Orm\Entity\FieldType;
 
-class User extends Entity {
-    const TYPE = 'user';
+class User extends LikableEntity {
+    const TYPE = EntityType::USER;
 
     const FIELD_EMAIL    = 'email';
     const FIELD_LOGIN    = 'login';
@@ -25,20 +28,27 @@ class User extends Entity {
     protected function getDataConfig() {
         return [
             self::FIELD_EMAIL => [
-                'type' => FieldType::STRING,
+                FieldParam::TYPE => FieldType::STRING,
             ],
             self::FIELD_LOGIN => [
-                'type' => FieldType::STRING,
+                FieldParam::TYPE => FieldType::STRING,
             ],
             self::FIELD_PASSWORD => [
-                'type' => FieldType::STRING,
+                FieldParam::TYPE => FieldType::STRING,
             ],
             self::FIELD_COUNTERS => [
-                'type' => FieldType::COUNTERS,
+                FieldParam::TYPE => FieldType::COUNTERS,
             ],
             self::FIELD_FLAGS => [
-                'type' => FieldType::FLAGS,
+                FieldParam::TYPE => FieldType::FLAGS,
             ],
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return self::TYPE;
     }
 }

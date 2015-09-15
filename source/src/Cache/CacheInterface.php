@@ -7,7 +7,7 @@ interface CacheInterface {
      * @param string $field
      * @return mixed
      */
-    public function get($field);
+    public function find($field);
 
     /**
      * @param string $field

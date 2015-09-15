@@ -3,11 +3,9 @@ namespace Orm\Entity;
 
 use LogicException;
 use Orm\Entity;
-use Orm\Model\Counters;
-use Orm\Model\FieldType;
 use User\User;
 
-class LikableEntity extends Entity {
+abstract class LikableEntity extends Entity {
     const FIELD_LIKES_COUNTER = 'likes_counter';
     const FIELD_USERS_LIKE    = 'users_like';
     const FIELD_USERS_DISLIKE = 'users_dislike';
@@ -59,6 +57,8 @@ class LikableEntity extends Entity {
         $this->addLikeUserId($User->getId());
         $this->getLikesCounter()->increment(self::COUNTER_LIKE);
 
+        // todo User owner karma
+
         return true;
     }
 
@@ -73,6 +73,8 @@ class LikableEntity extends Entity {
 
         $this->addDislikeUserId($User->getId());
         $this->getLikesCounter()->increment(self::COUNTER_DISLIKE);
+
+        // todo User owner karma
 
         return true;
     }

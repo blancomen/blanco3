@@ -1,5 +1,5 @@
 <?php
-namespace Orm\Model;
+namespace Orm\Entity;
 
 class Flags {
     const INT_LENGTH = 32;

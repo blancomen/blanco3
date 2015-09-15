@@ -23,22 +23,22 @@ class EntityTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(100, $Entity->get(EntityMock::FIELD_A));
         $this->assertEquals('', $Entity->get(EntityMock::FIELD_B));
         $this->assertEquals(['a' => 1, 'b' => 2], $Entity->get(EntityMock::FIELD_C));
-        $this->assertInstanceOf(\Orm\Model\Counters::class, $Entity->get(EntityMock::FIELD_D));
-        $this->assertInstanceOf(\Orm\Model\Flags::class, $Entity->get(EntityMock::FIELD_E));
+        $this->assertInstanceOf(\Orm\Entity\Counters::class, $Entity->get(EntityMock::FIELD_D));
+        $this->assertInstanceOf(\Orm\Entity\Flags::class, $Entity->get(EntityMock::FIELD_E));
     }
 
     public function testGetCounters() {
         $Entity = $this->createEntityMock();
         $Counters = $Entity->getCounters(EntityMock::FIELD_D);
 
-        $this->assertInstanceOf(\Orm\Model\Counters::class, $Counters);
+        $this->assertInstanceOf(\Orm\Entity\Counters::class, $Counters);
     }
 
     public function testGetFlags() {
         $Entity = $this->createEntityMock();
         $Flags = $Entity->getFlags(EntityMock::FIELD_E);
 
-        $this->assertInstanceOf(\Orm\Model\Flags::class, $Flags);
+        $this->assertInstanceOf(\Orm\Entity\Flags::class, $Flags);
     }
 
     public function testSerializeUnserialize() {

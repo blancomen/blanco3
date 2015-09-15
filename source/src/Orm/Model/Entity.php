@@ -1,10 +1,13 @@
 <?php
 namespace Orm;
 
+use Kernel\Kernel;
 use LogicException;
-use Orm\Model\Counters;
-use Orm\Model\FieldType;
-use Orm\Model\Flags;
+use Orm\Entity\Counters;
+use Orm\Entity\FieldParam;
+use Orm\Entity\FieldType;
+use Orm\Entity\Flags;
+use Orm\Repository\AbstractEntityRepository;
 
 abstract class Entity {
     /**
@@ -30,12 +33,12 @@ abstract class Entity {
      * <code>
      * return [
      *   'a' => [
-     *     'type' => FieldType::INT,
-     *     'default' => 0,
+     *     FieldParam::TYPE => FieldType::INT,
+     *     FieldParam::DEFAULT_VALUE => 0,
      *   ],
      *   'b' => [
-     *     'type' => FieldType::STRING,
-     *     'default' => 'Hello',
+     *     FieldParam::TYPE => FieldType::STRING,
+     *     FieldParam::DEFAULT_VALUE => 'Hello',
      *   ],
      * ];
      * </code>
@@ -43,6 +46,11 @@ abstract class Entity {
      * @return array
      */
     abstract protected function getDataConfig();
+
+    /**
+     * @return string
+     */
+    abstract public function getType();
 
     /**
      * @param string $field
@@ -181,10 +189,17 @@ abstract class Entity {
         $config = $this->getDataConfig();
 
         $config[self::FIELD_ID] = [
-            'type' => FieldType::INT,
-            'default' => 0,
+            FieldParam::TYPE => FieldType::INT,
+            FieldParam::DEFAULT_VALUE => 0,
         ];
 
         return $config;
+    }
+
+    /**
+     * @return AbstractEntityRepository
+     */
+    public function getRepository() {
+        return Kernel::getInstance()->getOrmProvider()->getRepositoryByType($this->getType());
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Orm\Model;
+namespace Orm\Entity;
 
 class Counters {
     const DEFAULT_COUNTER_VALUE = 0;

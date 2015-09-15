@@ -1,5 +1,8 @@
 <?php
-namespace Orm\Model;
+namespace Orm\Entity;
+
+use Kernel\Kernel;
+use Orm\Entity;
 
 class FieldType {
     const INT      = 'int';
@@ -7,10 +10,11 @@ class FieldType {
     const COUNTERS = 'counters';
     const FLAGS    = 'flags';
     const ARR      = 'array';
+    const ENTITY   = 'entity';
 
     /**
      * @param mixed $type
-     * @param int|string|Counters|Flags|array|null|mixed $value
+     * @param int|string|Counters|Flags|array|null|mixed|Entity $value
      * @return array|int|null|string
      */
     public static function serialize($type, $value) {
@@ -29,6 +33,9 @@ class FieldType {
 
             case FieldType::ARR:
                 return (array) $value;
+
+            case FieldType::ENTITY:
+                return $value->getId();
 
             default:
                 return null;
@@ -63,6 +70,9 @@ class FieldType {
             case FieldType::ARR:
                 return (array) $value;
 
+            case FieldType::ENTITY:
+//                $Repository = Kernel::getInstance()->getOrmProvider()->getRepositoryByType();
+
             default:
                 return null;
         }
@@ -88,6 +98,9 @@ class FieldType {
 
             case FieldType::ARR:
                 return [];
+
+            case FieldType::ENTITY:
+                return null;
 
             default:
                 return null;

@@ -2,18 +2,19 @@
 namespace Post;
 
 use Orm\Entity;
+use Orm\Entity\EntityType;
+use Orm\Entity\FieldParam;
 use Orm\Entity\LikableEntity;
-use Orm\Model\FieldType;
+use Orm\Entity\FieldType;
 
 class Post extends LikableEntity {
-    const TYPE = 'post';
+    const TYPE = EntityType::POST;
 
-    const FIELD_USER_ID      = 'user_id';
-    const FIELD_CREATE_AT    = 'create_at';
-    const FIELD_TITLE        = 'title';
-    const FIELD_CONTENT      = 'content';
-    const FIELD_COUNTERS     = 'counters';
-    const FIELD_PLUSES_USERS = 'pluses_users';
+    const FIELD_USER_ID = 'user_id';
+    const FIELD_CREATE_AT = 'create_at';
+    const FIELD_TITLE = 'title';
+    const FIELD_CONTENT = 'content';
+    const FIELD_USER_OWNER = 'user_owner';
 
     /**
      * Return config data as array.
@@ -23,23 +24,28 @@ class Post extends LikableEntity {
     protected function getDataConfig() {
         return array_merge(parent::getDataConfig(), [
             self::FIELD_USER_ID => [
-                'type' => FieldType::INT,
+                FieldParam::TYPE => FieldType::INT,
             ],
             self::FIELD_CREATE_AT => [
-                'type' => FieldType::INT,
+                FieldParam::TYPE => FieldType::INT,
             ],
             self::FIELD_TITLE => [
-                'type' => FieldType::STRING,
+                FieldParam::TYPE => FieldType::STRING,
             ],
             self::FIELD_CONTENT => [
-                'type' => FieldType::STRING,
+                FieldParam::TYPE => FieldType::STRING,
             ],
-            self::FIELD_COUNTERS => [
-                'type' => FieldType::COUNTERS,
-            ],
-            self::FIELD_PLUSES_USERS => [
-                'type' => FieldType::ARR,
+            self::FIELD_USER_OWNER => [
+                FieldParam::TYPE => FieldType::ENTITY,
+                FieldParam::ENTITY_TYPE => EntityType::USER,
             ],
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return self::TYPE;
     }
 }

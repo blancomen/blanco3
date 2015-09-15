@@ -3,7 +3,7 @@
 class CountersTest extends PHPUnit_Framework_TestCase {
     public function testSimple() {
         $Counters = $this->createCounters();
-        $this->assertInstanceOf(\Orm\Model\Counters::class, $Counters);
+        $this->assertInstanceOf(\Orm\Entity\Counters::class, $Counters);
     }
 
     public function testGetSet() {
@@ -54,6 +54,6 @@ class CountersTest extends PHPUnit_Framework_TestCase {
     }
 
     private function createCounters() {
-        return new \Orm\Model\Counters();
+        return new \Orm\Entity\Counters();
     }
 }

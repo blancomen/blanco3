@@ -30,22 +30,29 @@ class EntityMock extends \Orm\Entity {
     protected function getDataConfig() {
         return [
             self::FIELD_A => [
-                'type' => \Orm\Model\FieldType::INT,
+                'type' => \Orm\Entity\FieldType::INT,
                 'default' => 100,
             ],
             self::FIELD_B => [
-                'type' => \Orm\Model\FieldType::STRING,
+                'type' => \Orm\Entity\FieldType::STRING,
             ],
             self::FIELD_C => [
-                'type' => \Orm\Model\FieldType::ARR,
+                'type' => \Orm\Entity\FieldType::ARR,
                 'default' => ['a' => 1, 'b' => 2],
             ],
             self::FIELD_D => [
-                'type' => \Orm\Model\FieldType::COUNTERS,
+                'type' => \Orm\Entity\FieldType::COUNTERS,
             ],
             self::FIELD_E => [
-                'type' => \Orm\Model\FieldType::FLAGS,
+                'type' => \Orm\Entity\FieldType::FLAGS,
             ],
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return 'mock';
     }
 }

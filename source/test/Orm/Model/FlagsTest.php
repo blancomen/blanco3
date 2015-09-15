@@ -4,7 +4,7 @@ class FlagsTest extends PHPUnit_Framework_TestCase {
 
     public function testSimple() {
         $Flags = $this->createFlags();
-        $this->assertInstanceOf(\Orm\Model\Flags::class, $Flags);
+        $this->assertInstanceOf(\Orm\Entity\Flags::class, $Flags);
     }
 
     public function testSetIsSetBit() {
@@ -50,6 +50,6 @@ class FlagsTest extends PHPUnit_Framework_TestCase {
     }
 
     private function createFlags() {
-        return new \Orm\Model\Flags();
+        return new \Orm\Entity\Flags();
     }
 }
