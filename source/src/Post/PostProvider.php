@@ -30,8 +30,15 @@ class PostProvider {
      * @return Post
      */
     public function getPost($postId) {
-        $Post = Kernel::getRepository(EntityType::POST)->loadById($postId);
+        $Post = $this->getRepository()->loadById($postId);
 
         return $Post;
+    }
+
+    /**
+     * @return PostRepository
+     */
+    protected function getRepository() {
+        return Kernel::getRepository(EntityType::POST);
     }
 }

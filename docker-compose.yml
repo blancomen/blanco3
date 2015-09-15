@@ -1,6 +1,7 @@
-blanco:
-  container_name: blanco-source
-  build: ./docker/blanco
+fpm:
+  container_name: blanco-php-fpm
+  build: ./docker/php-fpm
+  working_dir: /
   volumes:
     - ./source:/var/www
   links:
@@ -12,18 +13,11 @@ nginx:
   volumes:
     - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/nginx.conf
   volumes_from:
-    - blanco
+    - fpm
   ports:
     - "8080:80"
   links:
     - fpm
-
-fpm:
-  container_name: blanco-php-fpm
-  build: ./docker/php-fpm
-  working_dir: /
-  volumes_from:
-    - blanco
 
 testredis:
   container_name: test-redis

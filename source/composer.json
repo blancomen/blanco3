@@ -10,7 +10,6 @@
     ],
     "require": {
       "hassankhan/config": "0.8.2",
-      "bramus/router": "~1.0",
       "predis/predis": "1.1.*@dev"
     },
     "require-dev": {
