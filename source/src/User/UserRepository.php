@@ -2,9 +2,9 @@
 namespace User;
 
 use Orm\Entity;
-use Orm\Repository\AbstractEntityRepository;
+use Orm\Repository\AbstractRepository;
 
-class UserRepository extends AbstractEntityRepository {
+class UserRepository extends AbstractRepository {
     const REDIS_NAME = 'users';
 
     /**

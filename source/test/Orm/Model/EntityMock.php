@@ -1,12 +1,18 @@
 <?php
 
+use Orm\Entity\FieldParam;
+use Orm\Entity\FieldType;
+use Orm\Repository\AbstractRepository;
+
 class EntityMock extends \Orm\Entity {
+    const TYPE = 'mock';
 
     const FIELD_A = 'a';
     const FIELD_B = 'b';
     const FIELD_C = 'c';
     const FIELD_D = 'd';
     const FIELD_E = 'e';
+    const FIELD_F = 'f';
 
     /**
      * Return config data as array.
@@ -30,21 +36,25 @@ class EntityMock extends \Orm\Entity {
     protected function getDataConfig() {
         return [
             self::FIELD_A => [
-                'type' => \Orm\Entity\FieldType::INT,
-                'default' => 100,
+                FieldParam::TYPE => FieldType::INT,
+                FieldParam::DEFAULT_VALUE => 100,
             ],
             self::FIELD_B => [
-                'type' => \Orm\Entity\FieldType::STRING,
+                FieldParam::TYPE => FieldType::STRING,
             ],
             self::FIELD_C => [
-                'type' => \Orm\Entity\FieldType::ARR,
-                'default' => ['a' => 1, 'b' => 2],
+                FieldParam::TYPE => FieldType::ARR,
+                FieldParam::DEFAULT_VALUE => ['a' => 1, 'b' => 2],
             ],
             self::FIELD_D => [
-                'type' => \Orm\Entity\FieldType::COUNTERS,
+                FieldParam::TYPE => FieldType::COUNTERS,
             ],
             self::FIELD_E => [
-                'type' => \Orm\Entity\FieldType::FLAGS,
+                FieldParam::TYPE => FieldType::FLAGS,
+            ],
+            self::FIELD_F => [
+                FieldParam::TYPE => FieldType::ENTITY,
+                FieldParam::ENTITY_TYPE => EntityMock::TYPE,
             ],
         ];
     }
@@ -53,6 +63,22 @@ class EntityMock extends \Orm\Entity {
      * @return string
      */
     public function getType() {
-        return 'mock';
+        return self::TYPE;
+    }
+
+    /**
+     * @var AbstractRepository
+     */
+    protected $Repository = null;
+
+    public function setRepository(AbstractRepository $Repository) {
+        $this->Repository = $Repository;
+    }
+
+    /**
+     * @return AbstractRepository
+     */
+    public function getRepository() {
+        return $this->Repository;
     }
 }

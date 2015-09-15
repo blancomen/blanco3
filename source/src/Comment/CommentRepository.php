@@ -2,9 +2,9 @@
 namespace Comment;
 
 use Orm\Entity;
-use Orm\Repository\AbstractEntityRepository;
+use Orm\Repository\AbstractRepository;
 
-class CommentRepository extends AbstractEntityRepository {
+class CommentRepository extends AbstractRepository {
 
     /**
      * @return string

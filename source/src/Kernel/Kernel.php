@@ -3,8 +3,7 @@ namespace Kernel;
 
 use Config\ConfigLoader;
 use Connection\ConnectionFactory;
-use Orm\OrmProvider;
-use User\UserRepository;
+use Orm\Provider\AbstractOrmProvider;
 
 class Kernel {
     /**
@@ -28,7 +27,7 @@ class Kernel {
     protected $ConnectionFactory = null;
 
     /**
-     * @var OrmProvider
+     * @var AbstractOrmProvider
      */
     protected $OrmProvider = null;
 
@@ -44,6 +43,14 @@ class Kernel {
      */
     public static function getInstance() {
         return self::$Instance;
+    }
+
+    /**
+     * @param string $type
+     * @return \Orm\Repository\AbstractRepository
+     */
+    public static function getRepository($type) {
+        return self::getInstance()->getOrmProvider()->getRepositoryByType($type);
     }
 
     /**
@@ -75,31 +82,30 @@ class Kernel {
     }
 
     /**
+     * @param ConnectionFactory $ConnectionFactory
+     */
+    public function setConnectionFactory(ConnectionFactory $ConnectionFactory) {
+        $this->ConnectionFactory = $ConnectionFactory;
+    }
+
+    /**
      * @return ConnectionFactory
      */
     public function getConnectionFactory() {
-        if (is_null($this->ConnectionFactory)) {
-            $this->ConnectionFactory = new ConnectionFactory($this->getConfigLoader());
-        }
-
         return $this->ConnectionFactory;
     }
 
     /**
-     * @param OrmProvider $OrmProvider
+     * @param AbstractOrmProvider $OrmProvider
      */
     public function setOrmProvider($OrmProvider) {
         $this->OrmProvider = $OrmProvider;
     }
 
     /**
-     * @return OrmProvider
+     * @return AbstractOrmProvider
      */
     public function getOrmProvider() {
-        if (is_null($this->OrmProvider)) {
-            $this->OrmProvider = new OrmProvider($this->getConfigLoader(), $this->getConnectionFactory());
-        }
-
         return $this->OrmProvider;
     }
 }

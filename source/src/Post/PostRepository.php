@@ -2,9 +2,9 @@
 namespace Post;
 
 use Orm\Entity;
-use Orm\Repository\AbstractEntityRepository;
+use Orm\Repository\AbstractRepository;
 
-class PostRepository extends AbstractEntityRepository {
+class PostRepository extends AbstractRepository {
 
     /**
      * @return string

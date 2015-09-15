@@ -1,20 +1,39 @@
 <?php
 namespace Post;
 
+use LogicException;
 use Orm\Entity;
 use Orm\Entity\EntityType;
 use Orm\Entity\FieldParam;
 use Orm\Entity\LikableEntity;
 use Orm\Entity\FieldType;
+use User\User;
 
 class Post extends LikableEntity {
     const TYPE = EntityType::POST;
 
-    const FIELD_USER_ID = 'user_id';
     const FIELD_CREATE_AT = 'create_at';
     const FIELD_TITLE = 'title';
     const FIELD_CONTENT = 'content';
     const FIELD_USER_OWNER = 'user_owner';
+
+    /**
+     * @return User|null
+     */
+    public function getOwner() {
+        return $this->get(self::FIELD_USER_OWNER);
+    }
+
+    /**
+     * @param User $User
+     */
+    public function setOwner(User $User) {
+        if (!$User->getId()) {
+            throw new LogicException("Can not set owner without id");
+        }
+
+        $this->set(self::FIELD_USER_OWNER, $User);
+    }
 
     /**
      * Return config data as array.
@@ -23,9 +42,6 @@ class Post extends LikableEntity {
      */
     protected function getDataConfig() {
         return array_merge(parent::getDataConfig(), [
-            self::FIELD_USER_ID => [
-                FieldParam::TYPE => FieldType::INT,
-            ],
             self::FIELD_CREATE_AT => [
                 FieldParam::TYPE => FieldType::INT,
             ],

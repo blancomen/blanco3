@@ -1,10 +1,13 @@
 <?php
 
+use Orm\Repository\Driver\RepositoryDriverArray;
+use Orm\Repository\EntityNotFoundException;
+
 class RepositoryTest extends PHPUnit_Framework_TestCase {
 
     public function testSimple() {
         $Rep = $this->createRepository();
-        $this->assertInstanceOf(Orm\Repository\AbstractEntityRepository::class, $Rep);
+        $this->assertInstanceOf(Orm\Repository\AbstractRepository::class, $Rep);
     }
 
     public function testSaveLoad() {
@@ -55,15 +58,14 @@ class RepositoryTest extends PHPUnit_Framework_TestCase {
 
     public function testNotFound() {
         $Rep = $this->createRepository();
-        $this->setExpectedException(Orm\Repository\EntityNotFoundException::class);
+        $this->setExpectedException(EntityNotFoundException::class);
 
         $Rep->loadById(100);
     }
 
     private function createRepository() {
-        return new RepositoryMock();
+        return new RepositoryMock(new RepositoryDriverArray());
     }
-
 
     private function createEntity() {
         return new EntityMock();

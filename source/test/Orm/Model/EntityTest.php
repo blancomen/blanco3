@@ -1,8 +1,13 @@
 <?php
 
 use Orm\Entity;
+use Orm\Repository\Driver\RepositoryDriverArray;
 
 class EntityTest extends PHPUnit_Framework_TestCase {
+    protected function setUp() {
+        $this->Repository = null;
+    }
+
     public function testSimple() {
         $Entity = $this->createEntityMock();
         $this->assertInstanceOf(Entity::class, $Entity);
@@ -81,10 +86,59 @@ class EntityTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $Entity->get(Entity::FIELD_ID));
     }
 
+    public function testSetEntity() {
+        $Entity[0] = $this->createEntityMock();
+        $Entity[0]->save();
+
+        $Entity[1] = $this->createEntityMock();
+        $Entity[1]->set(EntityMock::FIELD_F, $Entity[0]);
+    }
+
+    public function testGetEntity() {
+        $Entity[0] = $this->createEntityMock();
+        $Entity[0]->save();
+
+        $Entity[1] = $this->createEntityMock();
+        $Entity[1]->set(EntityMock::FIELD_F, $Entity[0]);
+
+        $this->assertEquals($Entity[0], $Entity[1]->get(EntityMock::FIELD_F));
+    }
+
+    public function testSetNotEntity() {
+        $this->setExpectedException(LogicException::class);
+        $Entity = $this->createEntityMock();
+        $Entity->set(EntityMock::FIELD_F, new stdClass());
+    }
+
+    public function testSaveLoadFieldWithEntity() {
+        $Entity[0] = $this->createEntityMock();
+        $Entity[0]->save();
+
+        $Entity[1] = $this->createEntityMock();
+        $Entity[1]->set(EntityMock::FIELD_F, $Entity[0]);
+        $Entity[1]->save();
+
+        $EntityLoaded = $this->getRepository()->loadById($Entity[1]->getId());
+        $this->assertEquals($Entity[1], $EntityLoaded);
+        $this->assertEquals($Entity[0], $EntityLoaded->get(EntityMock::FIELD_F));
+    }
+
     /**
      * @return EntityMock
      */
     private function createEntityMock() {
-        return new EntityMock();
+        $Entity = new EntityMock();
+        $Entity->setRepository($this->getRepository());
+
+        return $Entity;
+    }
+
+    private $Repository;
+    private function getRepository() {
+        if (is_null($this->Repository)) {
+            $this->Repository = new RepositoryMock(new RepositoryDriverArray());
+        }
+
+        return $this->Repository;
     }
 }

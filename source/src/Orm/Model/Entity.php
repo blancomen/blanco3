@@ -1,13 +1,14 @@
 <?php
 namespace Orm;
 
+use Exception;
 use Kernel\Kernel;
 use LogicException;
 use Orm\Entity\Counters;
 use Orm\Entity\FieldParam;
 use Orm\Entity\FieldType;
 use Orm\Entity\Flags;
-use Orm\Repository\AbstractEntityRepository;
+use Orm\Repository\AbstractRepository;
 
 abstract class Entity {
     /**
@@ -57,6 +58,7 @@ abstract class Entity {
      * @param mixed $value
      */
     public function set($field, $value) {
+        $this->filterValue($field, $value);
         $this->data[$field] = $value;
     }
 
@@ -147,7 +149,6 @@ abstract class Entity {
         $data = [];
         foreach ($this->data as $field => $value) {
             $type = $this->getFieldType($field);
-
             $data[$field] = FieldType::serialize($type, $value);
         }
         return $data;
@@ -161,7 +162,6 @@ abstract class Entity {
         $data = [];
         foreach ($serialized as $field => $value) {
             $type = $this->getFieldType($field);
-
             $data[$field] = FieldType::unserialize($type, $value);
         }
 
@@ -197,9 +197,60 @@ abstract class Entity {
     }
 
     /**
-     * @return AbstractEntityRepository
+     * @return AbstractRepository
      */
     public function getRepository() {
         return Kernel::getInstance()->getOrmProvider()->getRepositoryByType($this->getType());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function load() {
+        if (!$this->getId()) {
+            throw new Exception("Can not load entity without id");
+        }
+
+        $data = $this->getRepository()->loadDataById($this->getId());
+        $this->unserialize($data);
+    }
+
+    /**
+     * @return int
+     */
+    public function save() {
+        // todo lock
+        return $this->getRepository()->save($this);
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @throws LogicException
+     */
+    protected function filterValue($field, $value) {
+        $type = $this->getFieldType($field);
+
+        if ($type == FieldType::ENTITY && $value) {
+            if (!($value instanceof Entity)) {
+                throw new LogicException("Value for field {$field} must extend " . Entity::class);
+            }
+
+            if (!$value->getId()) {
+                throw new LogicException("Entity for field {$field} must be saved");
+            }
+
+            try {
+                $entityType = $this->getFieldConfig($field, FieldParam::ENTITY_TYPE);
+            } catch (LogicException $Ex) {
+                $entityType = null;
+            }
+
+            if (!is_null($entityType)) {
+                if ($value->getType() != $entityType) {
+                    throw new LogicException("Value for field {$field} must be {$entityType}");
+                }
+            }
+        }
     }
 }

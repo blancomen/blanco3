@@ -1,8 +1,14 @@
 <?php
 namespace Orm\Entity;
 
-use Kernel\Kernel;
 use Orm\Entity;
+use Orm\Entity\FieldType\FieldTypeInterface;
+use Orm\Entity\FieldType\TypeArray;
+use Orm\Entity\FieldType\TypeCounters;
+use Orm\Entity\FieldType\TypeEntity;
+use Orm\Entity\FieldType\TypeFlags;
+use Orm\Entity\FieldType\TypeInt;
+use Orm\Entity\FieldType\TypeString;
 
 class FieldType {
     const INT      = 'int';
@@ -14,32 +20,11 @@ class FieldType {
 
     /**
      * @param mixed $type
-     * @param int|string|Counters|Flags|array|null|mixed|Entity $value
+     * @param mixed $value
      * @return array|int|null|string
      */
     public static function serialize($type, $value) {
-        switch ($type) {
-            case FieldType::COUNTERS:
-                return $value->serialize();
-
-            case FieldType::FLAGS:
-                return $value->serialize();
-
-            case FieldType::STRING:
-                return (string) $value;
-
-            case FieldType::INT:
-                return (int) $value;
-
-            case FieldType::ARR:
-                return (array) $value;
-
-            case FieldType::ENTITY:
-                return $value->getId();
-
-            default:
-                return null;
-        }
+        return self::getFieldType($type)->serialize($value);
     }
 
     /**
@@ -48,34 +33,7 @@ class FieldType {
      * @return mixed
      */
     public static function unserialize($type, $value) {
-        switch ($type) {
-            case FieldType::COUNTERS:
-                $Counters = self::getDefaultValue($type);
-                $Counters->unserialize((array) $value);
-
-                return $Counters;
-
-            case FieldType::FLAGS:
-                $Flags = self::getDefaultValue($type);
-                $Flags->unserialize((array) $value);
-
-                return $Flags;
-
-            case FieldType::STRING:
-                return (string) $value;
-
-            case FieldType::INT:
-                return (int) $value;
-
-            case FieldType::ARR:
-                return (array) $value;
-
-            case FieldType::ENTITY:
-//                $Repository = Kernel::getInstance()->getOrmProvider()->getRepositoryByType();
-
-            default:
-                return null;
-        }
+        return self::getFieldType($type)->unserialize($value);
     }
 
     /**
@@ -83,27 +41,36 @@ class FieldType {
      * @return array|int|null|Counters|Flags|string
      */
     public static function getDefaultValue($type) {
-        switch ($type) {
+        return self::getFieldType($type)->getDefaultValue();
+    }
+
+    /**
+     * @param string $type
+     * @return FieldTypeInterface
+     * @throws \Exception
+     */
+    private static function getFieldType($type) {
+        switch($type) {
             case FieldType::COUNTERS:
-                return new Counters();
+                return new TypeCounters();
 
             case FieldType::FLAGS:
-                return new Flags();
+                return new TypeFlags();
 
             case FieldType::STRING:
-                return '';
+                return new TypeString();
 
             case FieldType::INT:
-                return 0;
+                return new TypeInt();
 
             case FieldType::ARR:
-                return [];
+                return new TypeArray();
 
             case FieldType::ENTITY:
-                return null;
+                return new TypeEntity();
 
             default:
-                return null;
+                throw new \Exception("Not found field type {$type}");
         }
     }
 }
