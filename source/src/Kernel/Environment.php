@@ -7,6 +7,7 @@ namespace Kernel;
 class Environment {
     const LOCAL = 'local';
     const PRODUCTION = 'production';
+    const TEST = 'test';
 
     /**
      * @param string $environment

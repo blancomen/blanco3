@@ -10,7 +10,7 @@ use Orm\Provider\OrmProviderRedis;
 require_once __DIR__ . '/path.php';
 require_once PATH_VENDOR . '/autoload.php';
 
-$Environment       = new Environment(Environment::LOCAL);
+$Environment       = new Environment(Environment::TEST);
 $ConfigLoader      = new ConfigLoader($Environment);
 $ConnectionFactory = new ConnectionFactory($ConfigLoader);
 $OrmProvider       = new OrmProviderArray();

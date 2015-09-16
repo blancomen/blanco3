@@ -10,6 +10,11 @@ abstract class AbstractFeed {
     protected $Redis = null;
 
     /**
+     * @return string
+     */
+    abstract protected function getFeedName();
+
+    /**
      * @param Client $Redis
      */
     public function __construct(Client $Redis) {
@@ -29,6 +34,4 @@ abstract class AbstractFeed {
     protected function setRedis($Redis) {
         $this->Redis = $Redis;
     }
-
-
 }

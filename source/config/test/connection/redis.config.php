@@ -3,8 +3,8 @@ return [
   'test' => [
       'parameters' => [
           'scheme' => 'tcp',
-          'host'   => 'defaut-redis',
-          'port'   => 6379,
+          'host'   => '192.168.99.100',
+          'port'   => 6380,
       ],
       'options' => [
 
