@@ -8,9 +8,12 @@ define([
     '../view/page/loadingView',
     '../view/page/blogView',
     '../view/page/siteView',
-    '../view/page/interestView'
+    '../view/page/interestView',
+
+    '../collections/postsCollection',
 ], function ($, Bootstrap, Backbone, MainView, MainMenuView, MainFooterView, LoadingView,
-     BlogView, SiteView, InterestView) {
+     BlogView, SiteView, InterestView,
+     PostsCollection) {
     'use strict';
 
     app.Router = Backbone.Router.extend({
@@ -37,8 +40,15 @@ define([
         getBlogPage: function() {
             this.renderLoadingView();
 
-            app.mainView.contentView = new BlogView();
-            app.mainView.renderContent();
+            var postsCollection = new PostsCollection();
+
+            postsCollection.fetch({
+                url: '?action=get/posts'
+            }).complete(function() {
+                app.mainView.contentView = new BlogView({postsCollection: postsCollection});
+                app.mainView.renderContent();
+            });
+
         },
         getSitePage: function() {
             this.renderLoadingView();
@@ -56,6 +66,20 @@ define([
         renderLoadingView: function() {
             app.mainView.contentView = new LoadingView();
             app.mainView.renderContent();
+        },
+
+        getPosts: function () {
+            return $.ajax({
+                method: 'get',
+                url: '/',
+                data: {
+                    action: 'get/posts'
+                },
+                success: function(response) {
+                    app.photosCollection = new PostsCollection(response);
+                    console.log(response);
+                }
+            })
         }
     });
 

@@ -2,9 +2,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!templates/page/blog.html'
+    'text!templates/page/blog.html',
+    'view/post/postView'
 ],
-function ($, _, Backbone, blogTemplate) {
+function ($, _, Backbone, blogTemplate, PostView) {
     'use strict';
     app.BlogView = Backbone.View.extend({
         //events:{
@@ -13,13 +14,19 @@ function ($, _, Backbone, blogTemplate) {
 
         tagName: "div",
         tpl: _.template(blogTemplate),
+        postsCollection: false,
 
-        initialize: function () {
+        initialize: function (data) {
+            this.postsCollection = data.postsCollection;
             this.render();
         },
 
         render: function () {
-            this.$el.html(this.tpl());
+            this.postsCollection.each(function (item) {
+                var item = new PostView({model: item});
+                this.$el.append(item.el);
+            }, this);
+
             return this;
         }
     });

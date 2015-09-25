@@ -56,3 +56,27 @@ a:hover {
 .app-content {
     min-height: 20px;
 }
+
+.post-wrap {
+    border: 1px solid lightgray;
+    margin: 2px 0 4px 0;
+    padding: 5px 10px 10px 10px;
+}
+
+.post-wrap .title {
+    padding: 0 0 0 2px;
+    border-bottom: 1px dashed #e1e1e1;
+    font-weight: bold;
+    color: #578258;
+}
+
+.post-wrap .content {
+    margin: 10px 0 10px 0;
+}
+
+.post-wrap .post-data {
+    border-top: 1px dashed #e1e1e1;
+    color: gray;
+    padding: 2px 0 0 0;
+    font-size: 9pt;
+}
