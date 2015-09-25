@@ -1,0 +1,58 @@
+body {
+    /*padding: 0;*/
+    /*margin: 0;*/
+    font-family: Tahoma, serif;
+    font-size: 10pt;
+}
+
+.container.root {
+    width: 800px;
+    min-width: 800px;
+    max-width: 800px;
+    margin-top: 15px;
+}
+
+a:link  {
+    color: #578258;
+    text-decoration: none;
+}
+a:visited  {
+    color: #578258;
+    text-decoration: none;
+}
+a:hover {
+    color: #8BAD8F;
+    text-decoration: underline;
+}
+
+.main-menu {
+    border-bottom: 1px solid #CCCCCC;
+    vertical-align: bottom;
+}
+
+.main-menu .main-logo {
+    display: inline-block;
+    width: 125px;
+}
+
+.main-menu .main-menu-list {
+    width: 670px;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    text-align: right;
+}
+
+.main-menu .main-menu-list li {
+    list-style: none;
+    display: inline-block;
+}
+
+.footer {
+    border-top: 1px solid #CCCCCC;
+    text-align: center;
+}
+
+.app-content {
+    min-height: 20px;
+}

@@ -3,6 +3,7 @@ namespace Kernel;
 
 use Config\ConfigLoader;
 use Connection\ConnectionFactory;
+use Feed\FeedProvider;
 use Orm\Provider\AbstractOrmProvider;
 
 class Kernel {
@@ -30,6 +31,11 @@ class Kernel {
      * @var AbstractOrmProvider
      */
     protected $OrmProvider = null;
+
+    /**
+     * @var FeedProvider
+     */
+    protected $FeedProvider = null;
 
     /**
      * @param Kernel $Kernel
@@ -107,5 +113,23 @@ class Kernel {
      */
     public function getOrmProvider() {
         return $this->OrmProvider;
+    }
+
+    /**
+     * @return FeedProvider
+     */
+    public function getFeedProvider() {
+        if (is_null($this->FeedProvider)) {
+            $this->FeedProvider = new FeedProvider($this->getConnectionFactory());
+        }
+
+        return $this->FeedProvider;
+    }
+
+    /**
+     * @param FeedProvider $FeedProvider
+     */
+    public function setFeedProvider(FeedProvider $FeedProvider) {
+        $this->FeedProvider = $FeedProvider;
     }
 }

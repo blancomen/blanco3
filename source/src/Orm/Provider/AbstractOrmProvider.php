@@ -4,6 +4,7 @@ namespace Orm\Provider;
 use Cache\CacheArray;
 use Comment\CommentRepository;
 use Exception;
+use Feed\FeedProvider;
 use Orm\Entity\EntityType;
 use Orm\Repository\AbstractRepository;
 use Orm\Repository\Driver\RepositoryDriverInterface;
@@ -27,15 +28,16 @@ abstract class AbstractOrmProvider {
      * @return AbstractRepository
      */
     public function getRepositoryByType($entityType) {
-        $Repository = $this->getCache()->find($entityType);
-        if (!is_null($Repository)) {
-            return $Repository;
+        $Cache = $this->getCache();
+
+        if ($Cache->inCache($entityType)) {
+            return $Cache->find($entityType);
         }
 
         $RepositoryDriver = $this->createRepositoryDriver($entityType);
         $Repository = $this->createRepository($entityType, $RepositoryDriver);
 
-        $this->getCache()->set($entityType, $Repository);
+        $Cache->set($entityType, $Repository);
 
         return $Repository;
     }

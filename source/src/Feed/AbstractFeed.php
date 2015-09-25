@@ -10,9 +10,10 @@ abstract class AbstractFeed {
     protected $Redis = null;
 
     /**
+     * @param string $context
      * @return string
      */
-    abstract protected function getFeedName();
+    abstract protected function getFeedName($context = null);
 
     /**
      * @param Client $Redis

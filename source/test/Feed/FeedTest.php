@@ -81,7 +81,7 @@ class FeedTest extends PHPUnit_Framework_TestCase {
     }
 
     private function createRedis() {
-        return \Kernel\Kernel::getInstance()->getConnectionFactory()->getRedis('test');
+        return \Kernel\Kernel::getInstance()->getConnectionFactory()->getRedis('default');
     }
 
     private function createPost() {

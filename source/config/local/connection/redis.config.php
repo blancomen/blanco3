@@ -1,6 +1,6 @@
 <?php
 return [
-  'test' => [
+  'default' => [
       'parameters' => [
           'scheme' => 'tcp',
           'host'   => 'defaut-redis',

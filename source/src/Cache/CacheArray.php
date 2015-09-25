@@ -15,7 +15,7 @@ class CacheArray implements CacheInterface {
      * @return mixed
      */
     public function find($field) {
-        return array_key_exists($field, $this->cache) ? $this->cache[$field] : null;
+        return $this->inCache($field) ? $this->cache[$field] : null;
     }
 
     /**
@@ -51,5 +51,13 @@ class CacheArray implements CacheInterface {
 
     public function clear() {
         $this->cache = [];
+    }
+
+    /**
+     * @param mixed $field
+     * @return bool
+     */
+    public function inCache($field) {
+        return array_key_exists($field, $this->cache);
     }
 }

@@ -6,25 +6,30 @@ use Orm\Entity\EntityType;
 use Orm\Repository\AbstractRepository;
 use Post\Post;
 
-class FeedMain extends AbstractFeed {
+class FeedTag extends AbstractFeed {
     /**
      * @param Post $Post
      */
     public function savePost(Post $Post) {
-        $this->getRedis()->zadd($this->getFeedName(), [
-            $Post->getId() => $Post->get(Post::FIELD_CREATE_AT),
-        ]);
+        $tags = $Post->get(Post::FIELD_TAGS);
+
+        foreach ($tags as $tag) {
+            $this->getRedis()->zadd($this->getFeedName($tag), [
+                $Post->getId() => $Post->get(Post::FIELD_CREATE_AT),
+            ]);
+        }
     }
 
     /**
+     * @param $tag
      * @param $fromTime
      * @param $offset
      * @param $count
-     * @return Post[]
+     * @return \Post\Post[]
      */
-    public function getPosts($fromTime, $offset, $count) {
+    public function getPosts($tag, $fromTime, $offset, $count) {
         $postIds = $this->getRedis()->zrevrangebyscore(
-            $this->getFeedName(),
+            $this->getFeedName($tag),
             $fromTime,
             '-inf',
             [
@@ -45,10 +50,10 @@ class FeedMain extends AbstractFeed {
     }
 
     /**
-     * @param string $context
-     * @return string
-     */
+    * @param string $context
+    * @return string
+    */
     protected function getFeedName($context = null) {
-        return 'main';
+        return 'feed:tag:' . $context;
     }
 }

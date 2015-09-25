@@ -1,11 +1,15 @@
 <?php
 
 use Kernel\Kernel;
+use Template\TemplateRender;
 
 /** @var Kernel $Kernel */
 $Kernel = include __DIR__ . '/../bootstrap/bootstrap.php';
 
-$ConnectionFactory = $Kernel->getConnectionFactory();
-$TestRedis = $ConnectionFactory->getRedis('test');
+$TemplateRender = new TemplateRender();
 
-echo "Is test redis connect: ", $TestRedis->isConnected(), PHP_EOL;
+$template = $TemplateRender->render('main', [
+    'content' => 'hello world',
+]);
+
+echo $template;

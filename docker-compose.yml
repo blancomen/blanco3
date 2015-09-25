@@ -13,11 +13,11 @@ fpm:
   links:
     - defaultredis
 
-nginx:
+nginxblanco:
   container_name: blanco-nginx
   build: ./docker/nginx
   volumes:
-    - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    - ./docker/nginx/nginx:/etc/nginx
   volumes_from:
     - fpm
   ports:

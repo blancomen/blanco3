@@ -46,6 +46,10 @@ class ConnectionFactory {
     protected function getClient($clientType, $name) {
         $connectionConfig = $this->getConnectionConfig($clientType, $name);
 
+        if (is_null($connectionConfig)) {
+            throw new Exception("Not found connection config {$name} for {$clientType}");
+        }
+
         switch ($clientType) {
             case self::TYPE_REDIS:
                 return new Client($connectionConfig['parameters'], $connectionConfig['options']);

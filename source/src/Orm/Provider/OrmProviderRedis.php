@@ -49,9 +49,9 @@ class OrmProviderRedis extends AbstractOrmProvider {
      */
     protected function getRepositoryRedisConfig() {
         return [
-            EntityType::USER => 'test',
-            EntityType::COMMENT => 'test',
-            EntityType::POST => 'test',
+            EntityType::USER => 'default',
+            EntityType::COMMENT => 'default',
+            EntityType::POST => 'default',
         ];
     }
 

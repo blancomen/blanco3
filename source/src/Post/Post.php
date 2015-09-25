@@ -16,6 +16,7 @@ class Post extends LikableEntity {
     const FIELD_TITLE = 'title';
     const FIELD_CONTENT = 'content';
     const FIELD_USER_OWNER = 'user_owner';
+    const FIELD_TAGS = 'tags';
 
     /**
      * @return User|null
@@ -54,6 +55,9 @@ class Post extends LikableEntity {
             self::FIELD_USER_OWNER => [
                 FieldParam::TYPE => FieldType::ENTITY,
                 FieldParam::ENTITY_TYPE => EntityType::USER,
+            ],
+            self::FIELD_TAGS => [
+                FieldParam::TYPE => FieldType::ARR,
             ],
         ]);
     }
