@@ -28,8 +28,17 @@ $Kernel->setApplication($Application);
 
 Kernel::setInstance($Kernel);
 
-/** @var User $SessionUser */
-$SessionUser = $Kernel->getRepository(EntityType::USER)->loadById(1);
+try {
+    /** @var User $SessionUser */
+    $SessionUser = $Kernel->getRepository(EntityType::USER)->loadById(1);
+} catch (\Orm\Repository\EntityNotFoundException $Ex) {
+    $SessionUser = new User([
+        User::FIELD_NAME => 'Йакуд',
+        User::FIELD_EMAIL => 'yakud@mail.stop',
+    ]);
+    $SessionUser->save();
+}
+
 $Kernel->getApplication()->setSessionUser($SessionUser);
 
 return $Kernel;

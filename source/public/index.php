@@ -64,15 +64,6 @@ switch ($_GET['action'] ?: '') {
         $content = json_encode($postsData);
         break;
 
-    case 'create/user':
-        $User = new User([
-            User::FIELD_NAME => 'Йакуд',
-            User::FIELD_EMAIL => 'yakud@mail.stop',
-            User::FIELD_EMAIL => 'yakud@mail.stop',
-        ]);
-        $User->save();
-        break;
-
     case 'add/post':
         $User = Kernel::getInstance()->getApplication()->getSessionUser();
 
