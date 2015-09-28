@@ -22,6 +22,13 @@ function ($, _, Backbone, blogTemplate, PostView) {
         },
 
         render: function () {
+
+
+            if (this.postsCollection.size() <= 0) {
+                this.$el.html(this.tpl());
+                return this;
+            }
+
             this.postsCollection.each(function (item) {
                 var item = new PostView({model: item});
                 this.$el.append(item.el);

@@ -21,10 +21,10 @@ class FeedTag extends AbstractFeed {
     }
 
     /**
-     * @param $tag
-     * @param $fromTime
-     * @param $offset
-     * @param $count
+     * @param string $tag
+     * @param int $fromTime
+     * @param int $offset
+     * @param int $count
      * @return \Post\Post[]
      */
     public function getPosts($tag, $fromTime, $offset, $count) {

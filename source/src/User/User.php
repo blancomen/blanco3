@@ -11,7 +11,7 @@ class User extends LikableEntity {
     const TYPE = EntityType::USER;
 
     const FIELD_EMAIL    = 'email';
-    const FIELD_LOGIN    = 'login';
+    const FIELD_NAME    = 'name';
     const FIELD_PASSWORD = 'password';
     const FIELD_COUNTERS = 'counters';
     const FIELD_FLAGS    = 'flags';
@@ -30,7 +30,7 @@ class User extends LikableEntity {
             self::FIELD_EMAIL => [
                 FieldParam::TYPE => FieldType::STRING,
             ],
-            self::FIELD_LOGIN => [
+            self::FIELD_NAME => [
                 FieldParam::TYPE => FieldType::STRING,
             ],
             self::FIELD_PASSWORD => [

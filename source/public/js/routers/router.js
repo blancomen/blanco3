@@ -21,7 +21,10 @@ define([
             '': 'getMainPage',
             'blog': 'getBlogPage',
             'site': 'getSitePage',
-            'interest': 'getInterestPage'
+            'interest': 'getInterestPage',
+            'feed/:feed': 'getFeed',
+            'feed/tag/:tag': 'getFeedTag',
+            'feed/user/:user_id': 'getFeedUser'
             //'main/:id': 'getPost',
             //'access_token=:token': 'getAccessToken'
         },
@@ -35,20 +38,10 @@ define([
         },
         getMainPage: function () {
             this.renderLoadingView();
-            window.location.hash = 'blog';
+            window.location.hash = '/feed/main';
         },
         getBlogPage: function() {
             this.renderLoadingView();
-
-            var postsCollection = new PostsCollection();
-
-            postsCollection.fetch({
-                url: '?action=get/posts'
-            }).complete(function() {
-                app.mainView.contentView = new BlogView({postsCollection: postsCollection});
-                app.mainView.renderContent();
-            });
-
         },
         getSitePage: function() {
             this.renderLoadingView();
@@ -61,6 +54,39 @@ define([
 
             app.mainView.contentView = new InterestView();
             app.mainView.renderContent();
+        },
+
+        getFeed: function(feed) {
+            this.renderLoadingView();
+
+            var postsCollection = new PostsCollection();
+
+            postsCollection.fetch({
+                url: '?action=get/feed&feed=' + feed
+            }).complete(function() {
+                app.mainView.contentView = new BlogView({postsCollection: postsCollection});
+                app.mainView.renderContent();
+            });
+        },
+        getFeedTag: function(tag) {
+            var postsCollection = new PostsCollection();
+
+            postsCollection.fetch({
+                url: '?action=get/feed&feed=tag:' + tag
+            }).complete(function() {
+                app.mainView.contentView = new BlogView({postsCollection: postsCollection});
+                app.mainView.renderContent();
+            });
+        },
+        getFeedUser: function(userId) {
+            var postsCollection = new PostsCollection();
+
+            postsCollection.fetch({
+                url: '?action=get/feed&feed=user:' + userId
+            }).complete(function() {
+                app.mainView.contentView = new BlogView({postsCollection: postsCollection});
+                app.mainView.renderContent();
+            });
         },
 
         renderLoadingView: function() {

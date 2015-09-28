@@ -28,6 +28,15 @@ class FieldType {
     }
 
     /**
+     * @param mixed $type
+     * @param mixed $value
+     * @return array|int|null|string
+     */
+    public static function export($type, $value) {
+        return self::getFieldType($type)->export($value);
+    }
+
+    /**
      * @param string $type
      * @param mixed $value
      * @return mixed

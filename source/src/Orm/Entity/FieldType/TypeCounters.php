@@ -27,4 +27,13 @@ class TypeCounters implements FieldTypeInterface {
     public function getDefaultValue() {
         return new Counters();
     }
+
+
+    /**
+     * @param mixed $value
+     * @return array
+     */
+    public function export($value) {
+        return $this->serialize($value);
+    }
 }

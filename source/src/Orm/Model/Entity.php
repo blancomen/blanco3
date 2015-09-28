@@ -155,6 +155,18 @@ abstract class Entity {
     }
 
     /**
+     * @return array
+     */
+    public function export() {
+        $data = [];
+        foreach ($this->data as $field => $value) {
+            $type = $this->getFieldType($field);
+            $data[$field] = FieldType::export($type, $value);
+        }
+        return $data;
+    }
+
+    /**
      * @param array $serialized
      * @return void
      */

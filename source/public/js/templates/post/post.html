@@ -1,10 +1,45 @@
-<div class="title"><%= title %></div>
-<div class="content"><%= content %></div>
-<div class="post-data">
-    <span>POST_ID: <%= id %></span> |
-    <span>Author: <a href="#">Yakud</a></span> |
-    <span>
-        <a href="#">O--</a>
-    </span> |
-    <span>.мыслей 0 [ 0 ] <a href="#">+</a> | <a href="#">-</a></span>
+<!--<div class="title"><%= title %></div>-->
+<!--<div class="content"><%= content %></div>-->
+<!--<div class="post-data">-->
+    <!--<span>POST_ID: <%= id %></span> |-->
+    <!--<span>Author: <a href="#">Yakud</a></span> |-->
+    <!--<span>-->
+        <!--<a href="#">O--</a>-->
+    <!--</span> |-->
+    <!--<span>.мыслей 0 [ 0 ] <a href="#">+</a> | <a href="#">-</a></span>-->
+<!--</div>-->
+
+<div class="entry">
+    <div class="news_header">
+        <div class="left"><h2><%= title %></h2> <span class="header_add">(new post)</span></div>
+        <!--<div class="right">[admin buttons :D]</div>-->
+        <div class="clear"></div>
+    </div>
+    <div class="entry_content">
+        <p><%= content %></p>
+
+        <div class="center read-more"><a href="#/post/<%= id %>" class="graybutton">[Читать дальше]</a></div>
+    </div>
+    <div class="entry_footer mgbot">
+        <div class="left lpads">
+            Автор: <a href="#/user/<%= user_owner.id %>"><%= user_owner.name %></a> |
+            <span>POST_ID: <%= id %></span>
+
+
+            <% if (tags.length) { %>
+                | Tags:
+                <% _.each(tags, function(tag){ %>
+                    <a href="#/feed/tag/<%= tag %>"><%= tag %></a>
+                <% }); %>
+            <% } %>
+
+        </div>
+        <div class="right rpads">
+            <ul class="menu">
+                <li class=" "><a href=#>Лайкнуть</a></li>
+                <li class=" "><a href=#>Мыслей</a>(1)</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
 </div>

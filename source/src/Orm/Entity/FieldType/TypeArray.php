@@ -23,4 +23,12 @@ class TypeArray implements FieldTypeInterface {
     public function getDefaultValue() {
         return [];
     }
+
+    /**
+     * @param mixed $value
+     * @return array
+     */
+    public function export($value) {
+        return $this->serialize($value);
+    }
 }

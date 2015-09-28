@@ -11,7 +11,7 @@ class UserAuthorizer {
     public function registerUser($email, $login, $passwordHash) {
         $User = new User([
             User::FIELD_EMAIL => $email,
-            User::FIELD_LOGIN => $login,
+            User::FIELD_NAME => $login,
             User::FIELD_PASSWORD => $passwordHash,
         ]);
 

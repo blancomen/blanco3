@@ -38,6 +38,11 @@ class Kernel {
     protected $FeedProvider = null;
 
     /**
+     * @var Application
+     */
+    protected $Application = null;
+
+    /**
      * @param Kernel $Kernel
      */
     public static function setInstance(Kernel $Kernel) {
@@ -52,6 +57,7 @@ class Kernel {
     }
 
     /**
+     * @see EntityType
      * @param string $type
      * @return \Orm\Repository\AbstractRepository
      */
@@ -131,5 +137,19 @@ class Kernel {
      */
     public function setFeedProvider(FeedProvider $FeedProvider) {
         $this->FeedProvider = $FeedProvider;
+    }
+
+    /**
+     * @return Application
+     */
+    public function getApplication() {
+        return $this->Application;
+    }
+
+    /**
+     * @param Application $Application
+     */
+    public function setApplication(Application $Application) {
+        $this->Application = $Application;
     }
 }

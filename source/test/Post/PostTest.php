@@ -10,7 +10,7 @@ class PostTest extends PHPUnit_Framework_TestCase {
 
     public function testSaveLoad() {
         $User = $this->createUser();
-        $User->set(User::FIELD_LOGIN, 'yakud');
+        $User->set(User::FIELD_NAME, 'yakud');
         $User->save();
 
         $Post = $this->createPost();

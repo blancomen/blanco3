@@ -28,4 +28,13 @@ class TypeFlags implements FieldTypeInterface {
     public function getDefaultValue() {
         return new Flags();
     }
+
+
+    /**
+     * @param mixed $value
+     * @return array
+     */
+    public function export($value) {
+        return $this->serialize($value);
+    }
 }

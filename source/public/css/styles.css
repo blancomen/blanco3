@@ -1,0 +1,239 @@
+@charset "utf-8";
+/* styles */
+
+body
+{
+	font-family: "Verdana";
+	font-size: 14px;
+	line-height: 1.3;
+	/*background-color:#E9E9E9;*/
+	background-color: rgb(245, 245, 245);;
+	padding-bottom: 1em;
+}
+
+/* system */
+
+.clear{clear:both;}
+.left {float: left}
+.right {float: right;}
+.pad {padding: 1em;}
+.lpad {margin-left: 1em;}
+.rpad {margin-right: 1em;}
+
+.lpads {margin-left: 0.2em;}
+.rpads {margin-right: 0.2em;}
+
+.mgbot {margin-bottom: 2em;}
+
+a.center, .center a, .center {text-align: center;}
+
+/* global */
+
+#wrapper
+{
+	max-width: 940px;
+	width:940px;
+	margin: 0 auto;
+		/*background-color: #E1E1E1;*/
+		background-color:#FFF;
+			padding-bottom: 1em;
+
+				max-width: 900px;
+	width:900px;
+}
+
+#header
+{
+	padding: 0.5em;
+	border-bottom: 1px dashed #aaa;
+		margin-bottom: 1em;
+}
+
+
+#mainmenu
+{
+	padding: 0.5em;
+}
+
+#copyright
+{
+	color:#777;
+	margin: 0 auto;
+	margin-top: 1em;
+	width: 600px;
+	text-align: center;
+	font-size: 12px
+}
+
+
+
+/* global types tags*/
+
+a, a:visited {color: #578258;}
+a:hover {color: #8BAD8F;}
+
+/* global types user*/
+
+#mainmenu li {display:inline}
+#mainmenu li a {display:inline; padding: 0.2em;}
+#mainmenu ul  {display:inline}
+
+.header_add{color:#aaa;font-weight: normal;}
+
+.entry img {margin-top: 0.5em; margin-bottom: 1em;}
+
+ul.menu li {display:inline}
+
+ul.menu li a {color:#aaa; padding: 0.2em;}
+ul.menu li a:hover {color:#ccc;}
+.entry_footer a {color:#aaa;}
+.entry_footer a:hover {color:#ccc;}
+
+.graybutton, a.graybutton
+{
+text-decoration: none;
+padding: 0.5em;
+padding-left: 0.7em;
+padding-right: 0.7em;
+color:#aaa;
+}
+
+a.graybutton:hover
+{
+	background-color:#E9E9E9;
+}
+
+
+/* local  info-page*/
+
+.content {}
+
+
+#infopage {line-height: 1.4;} /*experimenting*/
+#devpage .entry {/*line-height: 1.3;*/} /*experimenting*/
+#newspage .entry {/*line-height: 1.3;*/} /*experimenting*/
+
+/* local  news-page*/
+
+.news_header
+{
+	font-weight: bold;
+	margin-bottom: 1em;
+	color: #578258;
+}
+
+.nodeco a {text-decoration: none}
+
+.comment_footer{text-align: right;margin-top: 0.5em;}
+.comment_footer a{color:#888; font-size: 12px; padding:1.5em; padding-left: 2em; padding-right: 0;}
+.comment_footer a:hover{color:#BBB;}
+
+.commentpad {margin-left: 1.5em;}
+
+
+
+
+
+/* local  dev-page*/
+
+.entry
+{
+	padding: 1em;
+	border-bottom: 1px dashed #C1C1C1;
+	margin-bottom: 1em;
+}
+
+.entry_header
+{
+	font-weight: bold;
+	margin-bottom: 1em;
+
+}
+
+.entry_content
+{
+padding-bottom: 0.1em;
+}
+
+.entry_footer
+{
+	border-top: 1px dashed #aaa;
+	padding-top: 0.75em;
+	margin-top: 1em;
+	color:#aaa;
+}
+
+.comments
+{
+margin-top:2em;
+}
+
+.comment
+{
+	background-color:#efefef;
+	border-bottom: 1px dashed #C1C1C1;
+	padding-top: 0.5em;
+	margin-top: 0.5em;
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+
+	padding-left: 1em;
+	padding-right: 1em;
+
+}
+.comment_header
+{
+	font-weight: bold;
+	margin-bottom: 0.5em;
+}
+
+
+.pages_link 
+{
+	font-size: 16px;
+	margin: 0 auto;
+	width: 600px;
+	text-align: center;
+	margin-top: 1.5em;
+}
+
+.pages_link_trot a
+{
+text-decoration: none;
+padding: 0.5em;
+padding-left: 0.7em;
+padding-right: 0.7em;
+color:#aaa;
+}
+
+.pages_link_trot a:hover
+{
+	background-color:#E9E9E9;
+}
+
+.pages_link_numbers {margin-top: 0.5em; color:#444; font-size: 18px;}
+
+.pages_link_numbers a
+{
+	font-size: 16px;
+text-decoration: none;
+padding: 0.5em;
+padding-left: 0.7em;
+padding-right: 0.7em;
+color:#aaa;
+}
+
+.pages_link_numbers a:hover
+{
+	background-color:#E9E9E9;
+}
+
+blockquote {background-color:#FFF; padding:1em; border:1px dashed #d8cdc3; margin:1em; margin-left:1em;margin-right:1em; border-left:3px solid #406e41;}
+.spoiler {background-color:#e1efe1; color:#e1efe1;  padding:1em; border:1px dashed #d8cdc3; margin:1em; margin-left:1em;margin-right:1em; border-left:3px solid #406e41;padding-top:1em;}
+.spoiler-plot {background-color:#e1efe1; color:#e1efe1; padding:1em; border:1px dashed #d8cdc3; margin:1em; margin-left:1em;margin-right:1em; border-left:3px solid #406e41;padding-top:1em;}
+.spoiler-plot:before { content: "Спойлер сюжета! Осторожно!"; color:#578258; font-size:18px; display:block; margin-bottom: 0.5em;} 
+.spoiler-plot:after { content: "..."; color:#578258; font-size:16px; display:block;margin-top: 0.5em;}
+
+.read-more {
+    margin-top: 10px;
+}
