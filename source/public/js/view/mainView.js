@@ -13,6 +13,10 @@ function ($, _, Backbone) {
         contentView: false,
         footerView: false,
 
+        events: {
+          'click .logout' : 'logout'
+        },
+
         initialize: function () {
 
         },
@@ -32,6 +36,17 @@ function ($, _, Backbone) {
         renderContent: function() {
             var content = this.$el.find('.app-content');
             content.html(this.contentView.$el);
+        },
+
+        logout: function() {
+            console.log("HELL");
+            this.deleteCookie('PHPSESSID', null);
+            location.reload();
+            return false;
+        },
+
+        deleteCookie: function(name) {
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         }
     });
     return app.MainView;

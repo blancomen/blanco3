@@ -24,8 +24,13 @@
         </ul>
         |
         <ul class="menu">
-            <li><a href=#>.профиль</a></li>
-            <li><a href=#>.выход</a></li>
+            <% if (Blanco.isAuth) { %>
+                <li><a href=#>.профиль</a></li>
+                <li><a href=# class="logout">.выход</a></li>
+            <% } else { %>
+                <li><a href="#/auth/register">.регистрация</a></li>
+                <li><a href="#/auth/login">.вход</a></li>
+            <% } %>
         </ul>
     </div>
     <div class="clear"></div>

@@ -10,11 +10,13 @@ define([
     '../view/page/siteView',
     '../view/page/interestView',
     '../view/page/addPostView',
+    '../view/page/auth/authView',
+    '../view/page/auth/registerView',
 
     '../view/error404View',
     '../collections/postsCollection'
 ], function ($, Bootstrap, Backbone, MainView, MainMenuView, MainFooterView, LoadingView,
-     BlogView, SiteView, InterestView, AddPostView,
+     BlogView, SiteView, InterestView, AddPostView, AuthView, RegisterView,
      Error404View, PostsCollection) {
     'use strict';
 
@@ -29,6 +31,9 @@ define([
             'feed/user/:user_id': 'getFeedUser',
 
             'post/add': 'getPostAddView',
+
+            'auth/login': 'getLoginPage',
+            'auth/register': 'getRegisterPage',
 
             "*actions" : "show404Page"
         },
@@ -120,6 +125,15 @@ define([
 
         show404Page: function() {
             app.mainView.contentView = new Error404View();
+            app.mainView.renderContent();
+        },
+
+        getLoginPage: function() {
+            app.mainView.contentView = new AuthView();
+            app.mainView.renderContent();
+        },
+        getRegisterPage: function() {
+            app.mainView.contentView = new RegisterView();
             app.mainView.renderContent();
         }
     });

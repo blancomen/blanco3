@@ -14,12 +14,19 @@ use Utils\Time;
 $Kernel = include __DIR__ . '/../bootstrap/bootstrap.php';
 
 $c = 'Минимализм минимализму рознь. Здесь нужно без фанатизма) Все-таки некоторые моменты я бы по-ярче сделал или выделил другим способом. </br>
-                </br>
-                Сделай узкий сайт фиксированной ширины, а поня рисуй на определенном расстоянии слева. Расстояние зависит от ширины моника: если моник "узкий" (или девайсы), то рисовать не далеко (понь будет в углу). Если широкий, то на некотором расстоянии, но уже не в углу. Думаю, так должно хорошо смотреться.
-                </br>
-                </br>
-                Все мои рекомендации, только рекомендации, ты же знаешь
-            ';
+    </br>
+    Сделай узкий сайт фиксированной ширины, а поня рисуй на определенном расстоянии слева. Расстояние зависит от ширины моника: если моник "узкий" (или девайсы), то рисовать не далеко (понь будет в углу). Если широкий, то на некотором расстоянии, но уже не в углу. Думаю, так должно хорошо смотреться.
+    </br>
+    </br>
+    Все мои рекомендации, только рекомендации, ты же знаешь
+';
+
+$isAuth = isset($_SESSION['user_id']) ? true : false;
+if ($isAuth) {
+    $User = Kernel::getInstance()->getApplication()->getSessionUser();
+} else {
+    $User = null;
+}
 
 
 switch ($_GET['action'] ?: '') {
@@ -62,6 +69,9 @@ switch ($_GET['action'] ?: '') {
         }
 
         $content = json_encode($postsData);
+
+        header('Content-Type: application/json');
+
         break;
 
     case 'post/add':
@@ -71,6 +81,8 @@ switch ($_GET['action'] ?: '') {
         $Post = $PostProvider->createPost($User, $_GET['title'], $_GET['content'], array_map('trim', explode(',', $_GET['tags'])));
 
         $content = json_encode($Post->export());
+
+        header('Content-Type: application/json');
 
         break;
 
@@ -116,13 +128,61 @@ switch ($_GET['action'] ?: '') {
             $Post[1]->export(),
             $Post[0]->export(),
         ]);
+
+        header('Content-Type: application/json');
+
+        break;
+
+    case 'register':
+        $Redis = Kernel::getInstance()->getConnectionFactory()->getRedis('default');
+        $UserAuthorizer = new \User\UserAuthorizer($Redis);
+
+        try {
+            $User = $UserAuthorizer->registerUser($_GET['email'], $_GET['name'], $_GET['password']);
+            $_SESSION['user_id'] = $User->getId();
+            $content = ['register' => true];
+        } catch (Exception $Ex) {
+            $content = ['register' => false, 'message' => $Ex->getMessage()];
+        }
+
+
+        header('Content-Type: application/json');
+
+        break;
+
+    case 'login':
+        $Redis = Kernel::getInstance()->getConnectionFactory()->getRedis('default');
+        $UserAuthorizer = new \User\UserAuthorizer($Redis);
+
+        $User = $UserAuthorizer->auth($_GET['name'], $_GET['password']);
+        if ($User) {
+            $_SESSION['user_id'] = $User->getId();
+            $content = ['auth' => true];
+        } else {
+            $content = ['auth' => false];
+        }
+
+        header('Content-Type: application/json');
+
         break;
 
     default:
         $TemplateRender = new TemplateRender();
-        $content = $TemplateRender->render('main', [
-            'content' => 'hello world',
-        ]);
+
+        $data = [
+            'isAuth' => $isAuth,
+        ];
+        if ($isAuth) {
+            $data['user'] = $User->export();
+            unset($data['user']['password']);
+        } else {
+            $data['user'] = [];
+        }
+
+        $content = $TemplateRender->render('main', $data);
 }
 
+if (is_array($content)) {
+    $content = json_encode($content);
+}
 echo $content;

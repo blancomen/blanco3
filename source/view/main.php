@@ -9,6 +9,13 @@
 
     <link rel="stylesheet" type="text/css" href="css/reset.css" />
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+    <script>
+        // Bind from server
+        var Blanco = {};
+        Blanco.isAuth = <?php echo $isAuth ? 'true' : 'false'; ?>;
+        Blanco.User = <?php echo json_encode($user); ?>;
+    </script>
 </head>
 
 <head>
