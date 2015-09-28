@@ -19,10 +19,10 @@ function ($, _, Backbone, errorTempalte) {
         },
 
         render: function () {
-            this.$el.append(this.tpl(this.model.toJSON()));
+            this.$el.html(this.tpl());
             return this;
         }
     });
 
-    return app.PhotosView;
+    return app.Error404View;
 });

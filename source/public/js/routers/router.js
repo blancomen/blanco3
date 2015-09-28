@@ -27,10 +27,7 @@ define([
             'feed/tag/:tag': 'getFeedTag',
             'feed/user/:user_id': 'getFeedUser',
 
-            ".*": "show404Page"
-
-            //'main/:id': 'getPost',
-            //'access_token=:token': 'getAccessToken'
+            "*actions" : "show404Page"
         },
         initialize: function () {
             app.mainView = new MainView({ router: this });
@@ -40,6 +37,7 @@ define([
 
             app.mainView.render();
         },
+
         getMainPage: function () {
             this.renderLoadingView();
             window.location.hash = '/feed/main';
