@@ -64,11 +64,11 @@ switch ($_GET['action'] ?: '') {
         $content = json_encode($postsData);
         break;
 
-    case 'add/post':
+    case 'post/add':
         $User = Kernel::getInstance()->getApplication()->getSessionUser();
 
         $PostProvider = new \Post\PostProvider();
-        $Post = $PostProvider->createPost($User, '.hello_world 1', $c, ['tag1', 'tag2', 'tag3', 'tag4']);
+        $Post = $PostProvider->createPost($User, $_GET['title'], $_GET['content'], array_map('trim', explode(',', $_GET['tags'])));
 
         $content = json_encode($Post->export());
 

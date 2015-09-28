@@ -6,7 +6,7 @@ define([
 ],
 function ($, _, Backbone, postTempalte) {
     'use strict';
-    app.PhotosView = Backbone.View.extend({
+    app.PostView = Backbone.View.extend({
         //events:{
         //    'click .photo': 'auth'
         //},
@@ -15,7 +15,6 @@ function ($, _, Backbone, postTempalte) {
         className:'post-wrap',
         initialize: function () {
             this.render();
-
         },
 
         render: function () {
@@ -24,5 +23,5 @@ function ($, _, Backbone, postTempalte) {
         }
     });
 
-    return app.PhotosView;
+    return app.PostView;
 });

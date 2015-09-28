@@ -234,6 +234,5 @@ blockquote {background-color:#FFF; padding:1em; border:1px dashed #d8cdc3; margi
 .spoiler-plot:before { content: "Спойлер сюжета! Осторожно!"; color:#578258; font-size:18px; display:block; margin-bottom: 0.5em;} 
 .spoiler-plot:after { content: "..."; color:#578258; font-size:16px; display:block;margin-top: 0.5em;}
 
-.read-more {
-    margin-top: 10px;
-}
+.read-more {margin-top: 10px;}
+.row {width:100%;}

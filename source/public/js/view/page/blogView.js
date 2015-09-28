@@ -3,9 +3,10 @@ define([
     'underscore',
     'backbone',
     'text!templates/page/blog.html',
+    'text!templates/page/feed/title.html',
     'view/post/postView'
 ],
-function ($, _, Backbone, blogTemplate, PostView) {
+function ($, _, Backbone, blogTemplate, feedTitleTemplate, PostView) {
     'use strict';
     app.BlogView = Backbone.View.extend({
         //events:{
@@ -14,6 +15,7 @@ function ($, _, Backbone, blogTemplate, PostView) {
 
         tagName: "div",
         tpl: _.template(blogTemplate),
+        tplTitle: _.template(feedTitleTemplate),
         postsCollection: false,
 
         initialize: function (data) {
@@ -22,7 +24,7 @@ function ($, _, Backbone, blogTemplate, PostView) {
         },
 
         render: function () {
-
+            this.$el.append(this.tplTitle());
 
             if (this.postsCollection.size() <= 0) {
                 this.$el.html(this.tpl());

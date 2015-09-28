@@ -9,12 +9,13 @@ define([
     '../view/page/blogView',
     '../view/page/siteView',
     '../view/page/interestView',
+    '../view/page/addPostView',
 
     '../view/error404View',
     '../collections/postsCollection'
 ], function ($, Bootstrap, Backbone, MainView, MainMenuView, MainFooterView, LoadingView,
-     BlogView, SiteView, InterestView, Error404View,
-     PostsCollection) {
+     BlogView, SiteView, InterestView, AddPostView,
+     Error404View, PostsCollection) {
     'use strict';
 
     app.Router = Backbone.Router.extend({
@@ -26,6 +27,8 @@ define([
             'feed/:feed': 'getFeed',
             'feed/tag/:tag': 'getFeedTag',
             'feed/user/:user_id': 'getFeedUser',
+
+            'post/add': 'getPostAddView',
 
             "*actions" : "show404Page"
         },
@@ -89,6 +92,11 @@ define([
                 app.mainView.contentView = new BlogView({postsCollection: postsCollection});
                 app.mainView.renderContent();
             });
+        },
+
+        getPostAddView: function() {
+            app.mainView.contentView = new AddPostView();
+            app.mainView.renderContent();
         },
 
         renderLoadingView: function() {
