@@ -64,11 +64,20 @@ switch ($_GET['action'] ?: '') {
         $content = json_encode($postsData);
         break;
 
+    case 'create/user':
+        $User = new User([
+            User::FIELD_NAME => 'Йакуд',
+            User::FIELD_EMAIL => 'yakud@mail.stop',
+            User::FIELD_EMAIL => 'yakud@mail.stop',
+        ]);
+        $User->save();
+        break;
+
     case 'add/post':
         $User = Kernel::getInstance()->getApplication()->getSessionUser();
 
         $PostProvider = new \Post\PostProvider();
-        $Post = $PostProvider->createPost($User, '.hello_world 1', $c);
+        $Post = $PostProvider->createPost($User, '.hello_world 1', $c, ['tag1', 'tag2', 'tag3', 'tag4']);
 
         $content = json_encode($Post->export());
 

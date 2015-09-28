@@ -10,9 +10,10 @@ define([
     '../view/page/siteView',
     '../view/page/interestView',
 
-    '../collections/postsCollection',
+    '../view/error404View',
+    '../collections/postsCollection'
 ], function ($, Bootstrap, Backbone, MainView, MainMenuView, MainFooterView, LoadingView,
-     BlogView, SiteView, InterestView,
+     BlogView, SiteView, InterestView, Error404View,
      PostsCollection) {
     'use strict';
 
@@ -24,7 +25,10 @@ define([
             'interest': 'getInterestPage',
             'feed/:feed': 'getFeed',
             'feed/tag/:tag': 'getFeedTag',
-            'feed/user/:user_id': 'getFeedUser'
+            'feed/user/:user_id': 'getFeedUser',
+
+            ".*": "show404Page"
+
             //'main/:id': 'getPost',
             //'access_token=:token': 'getAccessToken'
         },
@@ -106,6 +110,11 @@ define([
                     console.log(response);
                 }
             })
+        },
+
+        show404Page: function() {
+            app.mainView.contentView = new Error404View();
+            app.mainView.renderContent();
         }
     });
 
